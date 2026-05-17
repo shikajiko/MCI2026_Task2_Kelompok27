@@ -14,7 +14,6 @@ DATA_LAKE_DIR = os.environ.get(
     "/opt/airflow/data_lake/orders"
 )
 
-
 def fetch_orders_json():
     response = requests.get(ORDER_API_URL, timeout=10)
     response.raise_for_status()

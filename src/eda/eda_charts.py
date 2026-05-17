@@ -23,5 +23,5 @@ def plot_null_rates(report_dir, chart_dir):
     plt.ylabel("Column")
     plt.title("Null Rate by Column")
     plt.tight_layout()
-    plt.savefig(Path(chart_dir) / "null_rate_by_column.png")
+    plt.savefig(Path(char_dir) / "null_rate_by_column.png")
     plt.close()
