@@ -73,7 +73,7 @@ def save_raw_json(payload):
 def save_raw_parquet(rows: list[dict]):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    output_dir = Path(DATA_LAKE_DIR) / "bronze_parquet"
+    output_dir = Path(DATA_LAKE_DIR) / "raw_parquet"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     output_path = output_dir / f"orders_{timestamp}.parquet"
