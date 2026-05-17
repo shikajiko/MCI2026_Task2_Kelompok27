@@ -8,10 +8,12 @@ x-airflow-common:
     - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     - AIRFLOW__CORE__LOAD_EXAMPLES=False
     - AIRFLOW__WEBSERVER__SECRET_KEY=rahasia_pelatihan_mmds_12345
-    - ORDER_DATA_LAKE_DIR=/opt/airflow/data_lake/order
+    - ORDER_DATA_LAKE_DIR=/opt/airflow/data_lake/orders
+    - PYTHONPATH=/opt/airflow/src:/opt/airflow/eda
   volumes:
     - ./dags:/opt/airflow/dags
     - ./data_lake:/opt/airflow/data_lake
+    - ./eda:/opt/airflow/eda
   depends_on:
     postgres:
       condition: service_healthy
