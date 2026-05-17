@@ -25,7 +25,7 @@ with DAG(
 
     process_orders = BashOperator(
         task_id="process_orders_spark",
-        bash_command="python /opt/airflow/dags/process_orders.py"
+        bash_command="python /opt/airflow/dags/process_orders_spark.py"
     )
 
     fetch_orders >> process_orders
