@@ -7,9 +7,13 @@ from eda_profile import (
     write_distinct_report,
     write_numeric_report,
     write_top_category_reports,
-    write_duplicate_key_report,
 )
-from eda_charts import plot_null_rates
+from eda_charts import (
+    plot_null_rates,
+    plot_numeric_distributions,
+    plot_top_categories,
+    plot_order_time_patterns,
+)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -50,16 +54,18 @@ def main():
     print("Schema:")
     df.printSchema()
 
-    print("Membuat eda report")
+    print("Membuat eda reports...")
     write_schema_report(df, str(report_dir))
     write_null_report(df, str(report_dir))
     write_distinct_report(df, str(report_dir))
     write_numeric_report(df, str(report_dir))
     write_top_category_reports(df, str(report_dir))
-    write_duplicate_key_report(df, str(report_dir))
 
-    print("Membuat charts")
+    print("Membuat charts...")
     plot_null_rates(str(report_dir), str(chart_dir))
+    plot_numeric_distributions(df, str(chart_dir))
+    plot_top_categories(df, str(chart_dir))
+    plot_order_time_patterns(df, str(chart_dir))
 
     print(f"Reports: {report_dir}")
     print(f"Charts: {chart_dir}")

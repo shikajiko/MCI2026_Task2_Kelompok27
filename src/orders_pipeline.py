@@ -20,12 +20,17 @@ with DAG(
 
     fetch_orders = BashOperator(
         task_id="fetch_orders",
-        bash_command="python /opt/airflow/dags/fetch_data.py"
+        bash_command="python /opt/airflow/src/dags/fetch_data.py"
     )
 
     process_orders = BashOperator(
         task_id="process_orders_spark",
-        bash_command="python /opt/airflow/dags/process_orders_spark.py"
+        bash_command="python /opt/airflow/src/dags/process_orders_spark.py"
     )
 
-    fetch_orders >> process_orders
+    load_orders = BashOperator(
+        task_id="load_orders_clickhouse",
+        bash_command="python /opt/airflow/src/dags/load_orders_clickhouse.py"
+    )
+
+    fetch_orders >> process_orders >> load_orders

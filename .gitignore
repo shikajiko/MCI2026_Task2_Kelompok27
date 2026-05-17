@@ -1,4 +1,5 @@
 soal.txt
 .agents/
 .codex/
+__pycache__/
 data_lake/

@@ -1,13 +1,14 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F 
-from clickhouse_driver import Client
 import os
-import glob
 
 DATA_LAKE_DIR = os.environ.get(
     "ORDER_DATA_LAKE_DIR", 
     "/opt/airflow/data_lake/orders"
 )
+RAW_PARQUET_DIR = os.path.join(DATA_LAKE_DIR, "raw_parquet")
+CLEAN_PARQUET_DIR = os.path.join(DATA_LAKE_DIR, "clean_parquet")
+REJECTED_PARQUET_DIR = os.path.join(DATA_LAKE_DIR, "rejected_parquet")
 
 def run_orders_analytics():
     spark = SparkSession.builder \
@@ -15,14 +16,19 @@ def run_orders_analytics():
         .config("spark.driver.memory", "1g") \
         .getOrCreate()
     
-    print("Membaca seluruh aliran data dari Data Lake...")
-    df_raw = spark.read.parquet(f"file://{DATA_LAKE_DIR}")
+    print("Membaca raw parquet dari Data Lake...")
+    df_raw = spark.read.parquet(f"file://{RAW_PARQUET_DIR}")
 
-    # Transform (Berbeda dari contoh GitHub MCI) 
-    print("Membersihkan data...")
+    total_raw = df_raw.count()
+    print(f"Total baris raw: {total_raw}")
 
-    df_clean = df_raw \
-        .dropna(subset=["order_id", "product_id"]) \
+    # Transform dan validasi mengikuti hasil EDA:
+    # - days_since_prior_order boleh null
+    # - kolom kunci order dan product wajib ada
+    # - nilai jam, hari, reordered, dan posisi keranjang harus masuk akal
+    print("Membersihkan dan memvalidasi data...")
+
+    df_typed = df_raw \
         .withColumn("order_id",             F.col("order_id").cast("int")) \
         .withColumn("user_id",              F.col("user_id").cast("int")) \
         .withColumn("order_number",         F.col("order_number").cast("int")) \
@@ -35,60 +41,67 @@ def run_orders_analytics():
         .withColumn("add_to_cart_order",    F.col("add_to_cart_order").cast("int")) \
         .withColumn("reordered",            F.col("reordered").cast("int"))
 
-    final_results = df_clean.toPandas()
-    spark.stop()
+    required_cols = [
+        "order_id",
+        "user_id",
+        "order_number",
+        "order_dow",
+        "order_hour_of_day",
+        "product_id",
+        "product_name",
+        "aisle_id",
+        "aisle",
+        "department_id",
+        "department",
+        "add_to_cart_order",
+        "reordered",
+    ]
 
-    print(f"total baris setelah transform: {len(final_results)}")
-    # --Transform
+    required_valid = None
+    for col_name in required_cols:
+        col_valid = F.col(col_name).isNotNull()
+        required_valid = col_valid if required_valid is None else required_valid & col_valid
 
-    print("Memuat ke ClickHouse Warehouse...")
-
-    client = Client(
-        host="clickhouse-server",
-        user="admin",
-        password="rahasia"
+    range_valid = (
+        (F.col("order_number") >= 1)
+        & F.col("order_dow").between(0, 6)
+        & F.col("order_hour_of_day").between(0, 23)
+        & (F.col("add_to_cart_order") >= 1)
+        & F.col("reordered").isin(0, 1)
+        & (
+            F.col("days_since_prior_order").isNull()
+            | F.col("days_since_prior_order").between(0, 30)
+        )
     )
 
-    client.execute("CREATE DATABASE IF NOT EXISTS mci_task2")
+    df_validated = df_typed.withColumn(
+        "is_days_since_prior_order_missing",
+        F.col("days_since_prior_order").isNull(),
+    ).withColumn(
+        "department",
+        F.when(F.lower(F.trim(F.col("department"))) == "missing", None)
+        .otherwise(F.col("department")),
+    )
 
-    client.execute('''
-        CREATE TABLE IF NOT EXISTS mci_task2.orders_fact (
-            order_id            Int32,
-            user_id             Int32,
-            order_number        Int32,
-            order_dow           Int32,
-            order_hour_of_day   Int32,
-            days_since_prior_order Float32,
-            eval_set            String,
-            product_id          Int32,
-            product_name        String,
-            aisle_id            Int32,
-            aisle               String,
-            department_id       Int32,
-            department          String,
-            add_to_cart_order   Int32,
-            reordered           Int32
-        ) ENGINE = MergeTree()
-        ORDER BY (order_id, product_id)
-    ''')
+    df_clean = df_validated.filter(required_valid & range_valid)
+    df_rejected = df_validated.filter(~(required_valid & range_valid))
 
-    client.execute("TRUNCATE TABLE mci_task2.orders_fact")
+    total_clean = df_clean.count()
+    total_rejected = df_rejected.count()
 
-    data_tuples = [tuple(x) for x in final_results.to_numpy()]
-    if data_tuples:
-        client.execute('INSERT INTO mci_task2.orders_fact VALUES', data_tuples)
-       
+    print(f"Total baris bersih: {total_clean}")
+    print(f"Total baris ditolak: {total_rejected}")
 
-    print("Membersihkan file Parquet lama dari Data Lake...")
-    files = glob.glob("/opt/airflow/data_lake/orders/*.parquet")
+    print("Menyimpan data bersih ke clean_parquet...")
+    df_clean.write.mode("overwrite").parquet(f"file://{CLEAN_PARQUET_DIR}")
 
-    for f in files:
-        try:
-            os.remove(f)
-        except OSError as e:
-            print(f"Error: {f} : {e.strerror}")
-    
-    print("✅ Pipeline Selesai!")
+    print("Menyimpan data invalid ke rejected_parquet untuk audit...")
+    df_rejected.write.mode("overwrite").parquet(f"file://{REJECTED_PARQUET_DIR}")
+
+    spark.stop()
+
+    print("✅ Proses cleaning selesai!")
+
 
 if __name__ == "__main__":
     run_orders_analytics()

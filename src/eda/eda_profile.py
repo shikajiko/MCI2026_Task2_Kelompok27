@@ -4,6 +4,12 @@ import pandas as pd
 from pyspark.sql import functions as F
 from pyspark.sql.types import NumericType, StringType
 
+NUMERIC_REPORT_COLUMNS = {
+    "order_number",
+    "days_since_prior_order",
+    "add_to_cart_order",
+}
+
 
 def write_schema_report(df, output_dir):
     rows = []
@@ -85,7 +91,11 @@ def get_string_columns(df):
 
 
 def write_numeric_report(df, output_dir):
-    numeric_cols = get_numeric_columns(df)
+    numeric_cols = [
+        col_name
+        for col_name in get_numeric_columns(df)
+        if col_name in NUMERIC_REPORT_COLUMNS
+    ]
 
     if not numeric_cols:
         return
@@ -129,6 +139,11 @@ def write_top_category_reports(df, output_dir: str, top_n: int = 20):
     string_cols = get_string_columns(df)
 
     for col_name in string_cols:
+        distinct_count = df.select(col_name).distinct().count()
+
+        if distinct_count <= 1:
+            continue
+
         top_df = (
             df.groupBy(col_name)
             .count()
@@ -140,31 +155,3 @@ def write_top_category_reports(df, output_dir: str, top_n: int = 20):
             category_dir / f"{col_name}.csv",
             index=False,
         )
-
-
-def write_duplicate_key_report(df, output_dir: str):
-    candidate_keys = [
-        col_name
-        for col_name in df.columns
-        if col_name == "id" or col_name.endswith("_id")
-    ]
-
-    rows = []
-
-    for col_name in candidate_keys:
-        duplicate_count = (
-            df.groupBy(col_name)
-            .count()
-            .filter(F.col("count") > 1)
-            .count()
-        )
-
-        rows.append({
-            "candidate_key": col_name,
-            "duplicate_key_count": duplicate_count,
-        })
-
-    pd.DataFrame(rows).to_csv(
-        Path(output_dir) / "duplicate_key_report.csv",
-        index=False,
-    )
