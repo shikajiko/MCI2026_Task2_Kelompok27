@@ -1,4 +1,4 @@
-# Tugas 2 MCI 2026 Kelompok 27
+<img width="721" height="630" alt="Screenshot 2026-05-18 at 22 15 54" src="https://github.com/user-attachments/assets/e92e20ed-e789-4895-b93d-cb96db66dc0b" /># Tugas 2 MCI 2026 Kelompok 27
 
 | Name | NRP |
 | --- | --- | 
@@ -159,6 +159,7 @@ Tindakan transformasi data yang kami lakukan ditentukan terlebih dahulu dengan t
 
 # ClickHouse
 
+[`src/sql/ddl/create_orders_fact.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/ddl/create_orders_fact.sql)
 - ```sql
   CREATE TABLE mci_task2.orders_fact (
               order_id            Int32,
@@ -190,3 +191,81 @@ Tindakan transformasi data yang kami lakukan ditentukan terlebih dahulu dengan t
   <img width="423" height="180" alt="Screenshot 2026-05-18 at 21 22 46" src="https://github.com/user-attachments/assets/0d3812a6-759c-4e80-aac1-4a950d89639d" />
 
 # Orders Insight Dashboard (Metabase)
+
+Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google.com/file/d/1OqTR5zzNvwLw0zPdpNHQi-v17EczQeE0/view?usp=sharing)
+
+- Average Days Between Orders
+  [`src/sql/analytics/average_days.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/average_days.sql)
+  <img width="1210" height="428" alt="Screenshot 2026-05-18 at 21 56 01" src="https://github.com/user-attachments/assets/08a65af4-e574-4c04-ae32-e7c52bf5b28b" />
+
+  Rata-rata pelanggan kembali belanja setiap ~11 hari.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Mengirim reminder atau promosi otomatis di hari ke-9 atau ke-10 setelah order sebelumnya untuk mendorong reorder lebih cepat. 
+
+- Average Basket Size
+  [`src/sql/analytics/average_basket_size.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/average_basket_size.sql)
+  <img width="1207" height="430" alt="Screenshot 2026-05-18 at 22 00 26" src="https://github.com/user-attachments/assets/033acfe3-9dc3-4534-bc67-a698490bdc32" />
+
+  Rata-rata pelanggan membeli hampir 10 item produk per order.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Menerapkan sistem threshold hadiah/diskon yang sedikit di atas 10 item untuk mendorong penambahan item. 
+
+- Customer Loyalty Segmentation
+  [`src/sql/analytics/cust_loyalty_seg.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/cust_loyalty_seg.sql)
+  <img width="977" height="426" alt="Screenshot 2026-05-18 at 22 03 53" src="https://github.com/user-attachments/assets/ee56d742-0365-4c9d-b077-f586bc5d3f39" />
+
+  Mayoritas pelanggan sudah di segmen Regular/Loyal (walau bisa berubah tergantung definisi per segmen).
+  Informasi yang didapatkan pihak toko:
+  - Mayoritas pelanggan sudah cukup loyal (>70%), di mana bisa diterapkan upaya mempertahankan loyalitas ini dengan reward.
+  - Segmen Returning (24,8%) bisa didorong untuk menjadi lebih loyal dengan penawaran yang bersifat personal.
+  - Segmen New (4,8%) sangat kecil, di mana bisa diterapkan upaya untuk menambah pelanggan baru. 
+
+- Busiest Day of the Week
+  [`src/sql/analytics/peak_day.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/peak_day.sql)
+  <img width="489" height="300" alt="Screenshot 2026-05-18 at 22 07 17" src="https://github.com/user-attachments/assets/6cfea154-0d31-4b45-8ede-87b15cbd7479" />
+
+  Hari 1 (asumsi hari Senin) adalah yang paling ramai.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Memastikan stok penuh dan sumber daya manusia tersedia pada hari tersebut. 
+
+- Busiest Time of the Day
+  [`src/sql/analytics/peak_hour.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/peak_hour.sql)
+  <img width="493" height="303" alt="Screenshot 2026-05-18 at 22 08 40" src="https://github.com/user-attachments/assets/657a600b-c654-4fb4-9ebf-c6689183d53f" />
+
+  Puncak terjadi di jam 14 - 15 (siang menjelang sore).
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Memberikan notifikasi, iklan, atau email secara digital menjelang jam sibuk. 
+  
+- Top Department
+  [`src/sql/analytics/top_department.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/top_department.sql)
+  <img width="714" height="624" alt="Screenshot 2026-05-18 at 22 10 21" src="https://github.com/user-attachments/assets/4e31154c-dae0-41aa-9a35-60ddf1ad6799" />
+
+  Produk segar seperti sayur dan buah adalah kebutuhan utama.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Menjaga ketersediaan dan kualitas stok pada departemen yang banyak diminta. 
+  
+- Aisle Performance
+  [`src/sql/analytics/aisle_performance.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/aisle_performance.sql)
+  <img width="712" height="625" alt="Screenshot 2026-05-18 at 22 12 43" src="https://github.com/user-attachments/assets/22671721-f1dd-4516-ad46-583eb6cea696" />
+
+  Packaged vegetables fruits and yogurt menjadi lorong paling ramai.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Menempatkan produk baru atau produk dengan margin tinggi di dekat lorong ini untuk meningkatkan paparan pelanggan terhadap produknya.
+  
+- Top Product
+  [`src/sql/analytics/top_product.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/top_product.sql)
+  <img width="715" height="624" alt="Screenshot 2026-05-18 at 22 14 27" src="https://github.com/user-attachments/assets/d4a4468d-0866-437e-a35d-00202c6bcdc1" />
+
+  Pisang organik menjadi salah satu produk paling diminati.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Memastikan bahwa produk yang populer tidak kehabisan stok. 
+
+- Reorder Rate
+  [`src/sql/analytics/reorder_rate.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/reorder_rate.sql)
+  <img width="721" height="630" alt="Screenshot 2026-05-18 at 22 15 54" src="https://github.com/user-attachments/assets/6ead41d6-c39b-4f6c-abc4-f3f6d384c11b" />
+
+  Produk seperti susu dan ground turkey memiliki banyak pembeli
+  
+- asd
+- asd
+- asd
