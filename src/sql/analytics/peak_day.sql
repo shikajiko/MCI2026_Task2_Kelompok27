@@ -1,4 +1,4 @@
--- Busiest Day of The Week
+-- Busiest Day of the Week
 SELECT
     order_dow,
     COUNT(DISTINCT order_id) AS total_orders
