@@ -1,4 +1,4 @@
-<img width="721" height="630" alt="Screenshot 2026-05-18 at 22 15 54" src="https://github.com/user-attachments/assets/e92e20ed-e789-4895-b93d-cb96db66dc0b" /># Tugas 2 MCI 2026 Kelompok 27
+# Tugas 2 MCI 2026 Kelompok 27
 
 | Name | NRP |
 | --- | --- | 
@@ -196,15 +196,16 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
 
 - Average Days Between Orders
   [`src/sql/analytics/average_days.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/average_days.sql)
-  <img width="1210" height="428" alt="Screenshot 2026-05-18 at 21 56 01" src="https://github.com/user-attachments/assets/08a65af4-e574-4c04-ae32-e7c52bf5b28b" />
+  - <img width="982" height="346" alt="Screenshot 2026-05-18 at 22 19 02" src="https://github.com/user-attachments/assets/8f4c005f-d8ee-4da0-856b-f09c16831d6b" />
 
+  
   Rata-rata pelanggan kembali belanja setiap ~11 hari.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
   - Mengirim reminder atau promosi otomatis di hari ke-9 atau ke-10 setelah order sebelumnya untuk mendorong reorder lebih cepat. 
 
 - Average Basket Size
   [`src/sql/analytics/average_basket_size.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/average_basket_size.sql)
-  <img width="1207" height="430" alt="Screenshot 2026-05-18 at 22 00 26" src="https://github.com/user-attachments/assets/033acfe3-9dc3-4534-bc67-a698490bdc32" />
+  - <img width="988" height="346" alt="Screenshot 2026-05-18 at 22 19 09" src="https://github.com/user-attachments/assets/ee6f5536-54c9-40b4-9f51-8b623e86b67c" />
 
   Rata-rata pelanggan membeli hampir 10 item produk per order.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -212,7 +213,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
 
 - Customer Loyalty Segmentation
   [`src/sql/analytics/cust_loyalty_seg.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/cust_loyalty_seg.sql)
-  <img width="977" height="426" alt="Screenshot 2026-05-18 at 22 03 53" src="https://github.com/user-attachments/assets/ee56d742-0365-4c9d-b077-f586bc5d3f39" />
+  - <img width="930" height="407" alt="Screenshot 2026-05-18 at 22 19 19" src="https://github.com/user-attachments/assets/ac8b083e-1ab2-4694-a327-34d28a95aa77" />
 
   Mayoritas pelanggan sudah di segmen Regular/Loyal (walau bisa berubah tergantung definisi per segmen).
   Informasi yang didapatkan pihak toko:
@@ -222,7 +223,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
 
 - Busiest Day of the Week
   [`src/sql/analytics/peak_day.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/peak_day.sql)
-  <img width="489" height="300" alt="Screenshot 2026-05-18 at 22 07 17" src="https://github.com/user-attachments/assets/6cfea154-0d31-4b45-8ede-87b15cbd7479" />
+  - <img width="464" height="285" alt="Screenshot 2026-05-18 at 22 19 26" src="https://github.com/user-attachments/assets/789dc538-86d6-47f4-b89f-f9e1950bd8da" />
 
   Hari 1 (asumsi hari Senin) adalah yang paling ramai.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -230,7 +231,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
 
 - Busiest Time of the Day
   [`src/sql/analytics/peak_hour.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/peak_hour.sql)
-  <img width="493" height="303" alt="Screenshot 2026-05-18 at 22 08 40" src="https://github.com/user-attachments/assets/657a600b-c654-4fb4-9ebf-c6689183d53f" />
+  - <img width="464" height="283" alt="Screenshot 2026-05-18 at 22 19 32" src="https://github.com/user-attachments/assets/f52ebc45-2d97-4548-a824-7c2c793955cc" />
 
   Puncak terjadi di jam 14 - 15 (siang menjelang sore).
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -238,7 +239,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
   
 - Top Department
   [`src/sql/analytics/top_department.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/top_department.sql)
-  <img width="714" height="624" alt="Screenshot 2026-05-18 at 22 10 21" src="https://github.com/user-attachments/assets/4e31154c-dae0-41aa-9a35-60ddf1ad6799" />
+  - <img width="464" height="403" alt="Screenshot 2026-05-18 at 22 19 38" src="https://github.com/user-attachments/assets/b5fac0d3-0cf5-45a6-8b12-f2c77d04e27e" />
 
   Produk segar seperti sayur dan buah adalah kebutuhan utama.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -246,7 +247,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
   
 - Aisle Performance
   [`src/sql/analytics/aisle_performance.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/aisle_performance.sql)
-  <img width="712" height="625" alt="Screenshot 2026-05-18 at 22 12 43" src="https://github.com/user-attachments/assets/22671721-f1dd-4516-ad46-583eb6cea696" />
+  - <img width="465" height="404" alt="Screenshot 2026-05-18 at 22 19 45" src="https://github.com/user-attachments/assets/516a2f67-54cc-4660-b6a9-aa74a4c7987d" />
 
   Packaged vegetables fruits and yogurt menjadi lorong paling ramai.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -254,7 +255,7 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
   
 - Top Product
   [`src/sql/analytics/top_product.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/top_product.sql)
-  <img width="715" height="624" alt="Screenshot 2026-05-18 at 22 14 27" src="https://github.com/user-attachments/assets/d4a4468d-0866-437e-a35d-00202c6bcdc1" />
+  - <img width="465" height="409" alt="Screenshot 2026-05-18 at 22 19 53" src="https://github.com/user-attachments/assets/2b583da5-2592-43ed-906e-44bf03b40064" />
 
   Pisang organik menjadi salah satu produk paling diminati.
   Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
@@ -262,10 +263,30 @@ Dashboard Metabase bisa diakses melalui: [Dashboard Orders](https://drive.google
 
 - Reorder Rate
   [`src/sql/analytics/reorder_rate.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/reorder_rate.sql)
-  <img width="721" height="630" alt="Screenshot 2026-05-18 at 22 15 54" src="https://github.com/user-attachments/assets/6ead41d6-c39b-4f6c-abc4-f3f6d384c11b" />
+  - <img width="465" height="406" alt="Screenshot 2026-05-18 at 22 20 14" src="https://github.com/user-attachments/assets/c2bc5882-adda-44e0-8c44-7b63180b68a1" />
 
-  Produk seperti susu dan ground turkey memiliki banyak pembeli
+  Produk seperti susu dan ground turkey memiliki banyak pembeli dengan loyalitas tinggi.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Produk ini bisa menerapkan program langganan/subscription.
   
-- asd
-- asd
-- asd
+- Market Basket Analysis
+  [`src/sql/analytics/basket_analysis.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/basket_analysis.sql)
+  - <img width="465" height="410" alt="Screenshot 2026-05-18 at 22 20 00" src="https://github.com/user-attachments/assets/4aa71684-3f2d-4912-927b-1870f902e698" />
+
+  Beberapa produk sering dibeli bersamaan, misalnya pisang organik dengan susu organik.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Menerapkan sistem bundling untuk produk-produk yang sering dibeli bersamaan. 
+  
+- Order Size Trend by User Segmentation
+  [`src/sql/analytics/order_trend_segmentation.sql`](https://github.com/shikajiko/MCI2026_Task2_Kelompok27/blob/main/src/sql/analytics/order_trend_segmentation.sql)
+  - <img width="467" height="410" alt="Screenshot 2026-05-18 at 22 20 08" src="https://github.com/user-attachments/assets/bb1bdf89-6102-4003-910d-45a03e34ab64" />
+
+  Pelanggan New membeli lebih sedikit item dari Regular dan Loyal.
+  Contoh tindakan yang bisa diambil oleh pihak toko dari informasi ini:
+  - Memberikan diskon produk dengan threshold jumlah item pada beberapa pembelian awal untuk mendorong pembeli baru membeli lebih banyak.
+ 
+# Kesimpulan 
+Tugas ini berhasil membangun pipeline ETL, mulai dari pengambilan data API, transformasi data, memasukkan data ke ClickHouse, hingga visualisasi dashboard untuk mengambil keputusan. Data mentah yang belum terstruktur dapat diolah menjadi insight bisnis yang bermakna. 
+
+### ~Terima Kasih
+`docker-compose down`
