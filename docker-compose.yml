@@ -1,22 +1,37 @@
-version: '3.8'
 x-airflow-common:
   &airflow-common
   build: .
-  user: "${AIRFLOW_UID:-50000}:0"
+  user: "${AIRFLOW_UID:-1000}:0"
   environment:
     - AIRFLOW__CORE__EXECUTOR=LocalExecutor
     - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
     - AIRFLOW__CORE__LOAD_EXAMPLES=False
     - AIRFLOW__WEBSERVER__SECRET_KEY=rahasia_pelatihan_mmds_12345
-    - WIKIPEDIA_DATA_LAKE_DIR=/opt/airflow/data_lake/wikipedia
+    - ORDER_DATA_LAKE_DIR=/opt/airflow/data_lake/orders
+    - PYTHONPATH=/opt/airflow/src:/opt/airflow/src/eda
   volumes:
-    - ./dags:/opt/airflow/dags
+    - ./src/orders_pipeline.py:/opt/airflow/dags/orders_pipeline.py
+    - ./src/dags/fetch_data.py:/opt/airflow/dags/fetch_data.py
+    - ./src/dags/process_orders_spark.py:/opt/airflow/dags/process_orders_spark.py
+    - ./src:/opt/airflow/src
     - ./data_lake:/opt/airflow/data_lake
   depends_on:
+    airflow-permissions:
+      condition: service_completed_successfully
     postgres:
       condition: service_healthy
 
 services:
+  airflow-permissions:
+    image: apache/airflow:2.9.1-python3.11
+    user: "0:0"
+    command: >
+      bash -c "mkdir -p /opt/airflow/data_lake/orders &&
+      chown -R ${AIRFLOW_UID:-1000}:0 /opt/airflow/data_lake &&
+      chmod -R ug+rwX /opt/airflow/data_lake"
+    volumes:
+      - ./data_lake:/opt/airflow/data_lake
+
   postgres:
     image: postgres:13
     environment:
