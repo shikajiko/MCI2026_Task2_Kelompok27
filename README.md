@@ -151,30 +151,42 @@ Tindakan transformasi data yang kami lakukan ditentukan terlebih dahulu dengan t
   ```
   Nilai null dikonversi eksplisit ke `None` agar `ClickHouse` menerimanya dengan benar, lalu data dimasukkan sekaligus dalam satu operasi `INSERT`.
 
+- Dokumentasi: 
+  <img width="1251" height="550" alt="Screenshot 2026-05-18 at 20 38 12" src="https://github.com/user-attachments/assets/43ce1e73-c3b9-4041-ac5e-06da38a9ec59" />
+  <img width="831" height="232" alt="Screenshot 2026-05-18 at 21 25 11" src="https://github.com/user-attachments/assets/6f4c816a-605e-4900-a14e-702ddf05362e" />
+  <img width="1236" height="391" alt="Screenshot 2026-05-18 at 21 25 27" src="https://github.com/user-attachments/assets/2985a315-b8da-42e1-a405-06da04edd65a" />
+
+
 # ClickHouse
 
-```python
+- ```sql
+  CREATE TABLE mci_task2.orders_fact (
+              order_id            Int32,
+              user_id             Int32,
+              order_number        Int32,
+              order_dow           Int32,
+              order_hour_of_day   Int32,
+              days_since_prior_order Nullable(Float32),
+              eval_set            String,
+              product_id          Int32,
+              product_name        String,
+              aisle_id            Int32,
+              aisle               String,
+              department_id       Int32,
+              department          Nullable(String),
+              add_to_cart_order   Int32,
+              reordered           Int32,
+              is_days_since_prior_order_missing UInt8
+          ) ENGINE = MergeTree()
+          ORDER BY (order_id, product_id)
+  ```
+  Skrip DDL untuk membuat schema. 
 
-```
-
-```python
-
-```
-
-```python
-
-```
-
-```python
-
-```
-
-```python
-
-```
-
-```python
-
-```
+- ```sql
+  SELECT count(*) FROM mci_task2.orders_fact
+  ```
+  Query untuk verifikasi apakah data sudah masuk ke dalam `ClickHouse`
+  
+  <img width="423" height="180" alt="Screenshot 2026-05-18 at 21 22 46" src="https://github.com/user-attachments/assets/0d3812a6-759c-4e80-aac1-4a950d89639d" />
 
 # Orders Insight Dashboard (Metabase)
